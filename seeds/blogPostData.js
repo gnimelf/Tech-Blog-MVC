@@ -7,6 +7,30 @@ const blogpostdata = [
     date: '8/9/2022',
     user_id: 1
   },
+  {
+    title: 'Test 1',
+    description: 'This is a test',
+    date: '8/9/2022',
+    user_id: 1
+  },
+  {
+    title: 'Test 2',
+    description: 'This is a test',
+    date: '8/9/2022',
+    user_id: 1
+  },
+  {
+    title: 'Test 3',
+    description: 'This is a test',
+    date: '8/9/2022',
+    user_id: 1
+  },
+  {
+    title: 'Test 4',
+    description: 'This is a test',
+    date: '8/9/2022',
+    user_id: 1
+  },
 ];
 
 const seedBlogPost = () => BlogPost.bulkCreate(blogpostdata);
