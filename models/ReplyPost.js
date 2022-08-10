@@ -23,7 +23,8 @@ ReplyPost.init(
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
-                model:repl
+                model:'blogpost',
+                key: "id",
             }
         },
         user_id: {
