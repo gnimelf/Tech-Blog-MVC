@@ -1,38 +1,43 @@
-const { BlogPost, User } = require('../models');
+const { Comment } = require('../models');
 
-const blogpostdata = [
+const commentData = [
   {
     description: 'reply 1',
     date: '8/9/2022',
-    parent_id: 1
+    blog_id: 1,
+    user_id: 1,
   },
   {
     title: 'Test 1',
     description: 'reply 1',
     date: '8/9/2022',
-    parent_id: 2
+    blog_id: 2,
+    user_id: 1
   },
   {
     title: 'Test 2',
     description: 'reply 1',
     date: '8/9/2022',
-    parent_id: 3
+    blog_id: 3,
+    user_id: 1
   },
   {
     title: 'Test 1',
     description: 'This is a test',
     date: '8/9/2022',
-    parent_id: 4
+    blog_id: 4,
+    user_id: 1
   },
   {
     title: 'Test 2',
     description: 'reply 2',
     date: '8/9/2022',
-    parent_id: 1
+    blog_id: 1,
+    user_id: 1
   },
 ];
 
-const seedBlogPost = () => BlogPost.bulkCreate(blogpostdata);
+const seedComment = () => Comment.bulkCreate(commentData);
 
 
-module.exports = seedBlogPost;
+module.exports = seedComment;
