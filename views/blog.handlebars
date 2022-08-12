@@ -1,0 +1,26 @@
+<div class="card col-md-10 offset-md-1 my-3">
+    <div class="card-body py-0 px-0">
+        <div class="card-header d-flex justify-content-between">
+            <h5 class="card-title">{{post.title}}</h5>
+            <h6 class="card-subtitle text-muted">Posted by
+                {{post.user.user_name}}
+                on
+                {{post.date}}</h6>
+        </div>
+        <div>
+            <p>{{post.description}}</p>
+        </div>
+        
+    </div>
+</div>
+{{#each post.comments as |comments|}}
+<div class="card col-md-10 offset-md-1 my-3">
+    <div class="card-body py-0 px-0">
+        <div class="card-header d-flex justify-content-between">
+            <div class="card-body py-0 px-0">
+                <p class="card-text px-3">{{comments.description}} by {{user.user_name}}</p>
+            </div>
+        </div>
+    </div> 
+</div>
+{{/each}}
