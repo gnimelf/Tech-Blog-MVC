@@ -1,13 +1,12 @@
 const { User, Blog, Comment } = require("../models");
 const router = require("express").Router();
-const withAuth = require('../utils/auth');
 
 // Show all posts
 router.get("/", async (req, res) => {
     try {
         // Get all posts
         const postData = await Blog.findAll({
-            include: [{ model: User }, { model: Comment }],
+            include: [{ model: User }],
         });
 
         // serialize post data
@@ -40,8 +39,6 @@ router.get("/blog/:id", async (req, res) => {
         // serialize post data
         const post = postData.get({ plain: true });
 
-        // console.log(post);
-
         // Use serilized data
         res.render("blog", { post });
     } catch (err) {
@@ -50,7 +47,8 @@ router.get("/blog/:id", async (req, res) => {
     }
 });
 
-router.get("/login", async (req, res) => {
+router.get("/login", (req, res) => {
+
     res.render("login");
 });
 
