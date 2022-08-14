@@ -2,12 +2,18 @@
 {{#each posts as |post|}}
     <div class="card col-md-10 offset-md-1 my-3">
         <div class="card-body py-0 px-0">
-            <div class="card-header d-flex justify-content-between ">
-                <h5 class="card-title"><a href="/blog/{{post.id}}">{{post.title}}</a> </h5>
+            <div class="card-header d-flex justify-content-between">
+                <h5 class="card-title"><a
+                        href="/blog/{{post.id}}"
+                    >{{post.title}}</a>
+                </h5>
                 <h6 class="card-subtitle text-muted">Posted by
                     {{user.user_name}}
                     on
                     {{post.date}}</h6>
+            </div>
+            <div class="mx-3">
+                <p>{{post.description}}</p>
             </div>
         </div>
     </div>
