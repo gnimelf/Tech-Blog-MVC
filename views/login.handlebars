@@ -1,20 +1,19 @@
 <div class="container text-left col-lg-6">
 
-    <form class="" action="/api/login" method="post">
+    <form class="login-form">
         <h1>Login</h1>
         <div class="mb-3">
-            <label class="form-label" for="username">Username</label><br />
-            <input class="form-control" id="username" type="text" /><br />
+            <label class="form-label" for="user-login">Username</label><br />
+            <input class="form-control" id="user-login" type="text" /><br />
         </div>
         <div class="mb-3">
-            <label class="form-label" for="password">Password:</label><br />
-            <input class="form-control" id="username" type="text" /><br />
+            <label class="form-label" for="password-login">Password:</label><br />
+            <input class="form-control" id="password-login" type="password" /><br />
         </div>
         <div class="d-flex justify-content-around">
             <button type="submit">Login</button>
-            <a href="/api/signup">Sign up!</a>
-
-            {{!-- TODO: CREATE SIGNUP PAGE --}}
+            <a href="/signup">Sign up!</a>
         </div>
     </form>
 </div>
+<script src="./js/login.js"></script>
