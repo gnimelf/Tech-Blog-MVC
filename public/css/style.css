@@ -6,3 +6,11 @@ header{
 body {
     margin: 0;
   }
+
+#login{
+    cursor: pointer;
+}
+
+#logout{
+    cursor: pointer;
+}

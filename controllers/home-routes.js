@@ -14,35 +14,40 @@ router.get("/", async (req, res) => {
         const posts = postData.map((project) => project.get({ plain: true }));
 
         // Use serilized data
-        res.render("home", 
-        {
-             posts,
-             logged_in: req.session.loggedIn,
-             userId: req.session.user_id
+        res.render("home", {
+            posts,
+            logged_in: req.session.loggedIn,
+            userId: req.session.user_id,
         });
     } catch (err) {
-        console.log("error" + err);
-        res.status(500).json(err);
+        res.status(500);
     }
 });
 
 router.get("/dashboard", async (req, res) => {
-    try {
-        const postData = await Blog.findAll({
-            where: { user_id: req.session.id },
-            include: [{ model: User, attributes: { exclude: ["password"] } }],
-        });
-        const posts = postData.map((postData) => postData.get({ plain: true }));
+    if (req.session.loggedIn === true) {
+        try {
+            const postData = await Blog.findAll( {
+                where:{user_id: req.session.userId,},
+                include: [
+                    { model: User, attributes: { exclude: ["password"] } },
+                ],
+            });
+            const posts = postData.map((cleaningPost) =>
+            cleaningPost.get({ plain: true })
+            );
 
-        console.log(posts);
+            console.log(posts);
 
-        res.render("dashboard", 
-        {
-            posts, 
-            logged_in: req.session.loggedIn,
-        });
-    } catch (err) {
-        res.status(500).json(err);
+            res.render("dashboard", {
+                posts,
+                logged_in: req.session.loggedIn,
+            });
+        } catch (err) {
+            res.status(500);
+        }
+    } else {
+        res.render("dashboard");
     }
 });
 
@@ -69,7 +74,7 @@ router.get("/blog/:id", async (req, res) => {
         res.render("blog", { post });
     } catch (err) {
         console.log(err);
-        res.status(500).json(err);
+        res.status(500);
     }
 });
 
