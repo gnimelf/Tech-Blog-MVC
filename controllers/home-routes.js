@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const { User, Blog, Comment } = require("../models");
 
 // Show all posts
@@ -13,9 +14,34 @@ router.get("/", async (req, res) => {
         const posts = postData.map((project) => project.get({ plain: true }));
 
         // Use serilized data
-        res.render("home", { posts });
+        res.render("home", 
+        {
+             posts,
+             logged_in: req.session.loggedIn,
+             userId: req.session.user_id
+        });
     } catch (err) {
-        console.log(err);
+        console.log("error" + err);
+        res.status(500).json(err);
+    }
+});
+
+router.get("/dashboard", async (req, res) => {
+    try {
+        const postData = await Blog.findAll({
+            where: { user_id: req.session.id },
+            include: [{ model: User, attributes: { exclude: ["password"] } }],
+        });
+        const posts = postData.map((postData) => postData.get({ plain: true }));
+
+        console.log(posts);
+
+        res.render("dashboard", 
+        {
+            posts, 
+            logged_in: req.session.loggedIn,
+        });
+    } catch (err) {
         res.status(500).json(err);
     }
 });
@@ -48,7 +74,6 @@ router.get("/blog/:id", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-
     res.render("login");
 });
 
