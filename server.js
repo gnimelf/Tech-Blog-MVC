@@ -5,6 +5,7 @@ const session = require("express-session");
 const exphbs = require("express-handlebars");
 const routes = require("./controllers");
 const sequelize = require("./config/connection");
+const { strict } = require("assert");
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 // Sets up express app
@@ -18,8 +19,9 @@ const sess = {
       // Stored in milliseconds (86400 === 1 day)
       maxAge: Date.now() + (30 * 86400 * 1000),
     },
-    sameSite: true,
+    sameSite: strict,
     resave: false,
+    httpOnly: true,
     saveUninitialized: false,
     store: new SequelizeStore({
         db: sequelize,
