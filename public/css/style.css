@@ -1,9 +1,18 @@
-:root{
-    --bgColor: #E7F6F2;
-    --light: #A5C9CA;
-    --medium: #395B64;
-    --dark: #2C3333;
+:root {
+    --bgColor: #e7f6f2;
+    --light: #a5c9ca;
+    --medium: #395b64;
+    --dark: #2c3333;
     --mouseOver: #294249;
+}
+
+p{
+    color:var(--dark);
+}
+
+html {
+    position: relative;
+    min-height: 100%;
 }
 
 header {
@@ -12,20 +21,25 @@ header {
 }
 
 body {
-    position: relative;
-    margin: 0;
-    min-height: 100%;
+    margin: 0 0 100px;
     background-color: var(--bgColor);
 }
 
 footer {
     text-align: center;
-    color:var(--light);
-    position: fixed;
-    width: 100%;
+    color: var(--light);
+    position: absolute;
+    left: 0;
     bottom: 0;
-    padding: 15px 0px;
+    height: 64px;
+    padding-top: 10px;
+    width: 100%;
+    overflow: hidden;
     background-color: var(--medium);
+}
+
+textarea:focus {
+    outline: 2px solid var(--medium);
 }
 
 .nav-link {
@@ -33,38 +47,49 @@ footer {
     font-size: large;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     color: var(--light);
 }
 
 .logo {
-    font-family: 'Silkscreen', cursive;
-    color:var(--bgColor)
+    font-family: "Silkscreen", cursive;
+    color: var(--bgColor);
 }
 
-.card-title{
+.card-title {
     font-weight: bold;
 }
 
-.card-header, .card-subtitle, .card-header a{
-    color:var(--light);
-    background-color:var(--medium);
+.card-header,
+.card-subtitle,
+.card-header a {
+    color: var(--light);
+    background-color: var(--medium);
     text-decoration: none;
 }
 
-.btn{
+.blog-post {
+    background-color: var(--light);
+}
+
+.blog-post a {
+    text-decoration: none;
+    color: var(--dark);
+}
+
+.btn {
     background-color: var(--medium);
     border: none;
 }
 
-.btn:hover{
+.btn:hover {
     background-color: var(--mouseOver);
 }
 
-#login{
+#login {
     cursor: pointer;
 }
 
-#logout{
+#logout {
     cursor: pointer;
 }

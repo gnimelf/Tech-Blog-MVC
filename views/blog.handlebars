@@ -7,7 +7,7 @@
                 on
                 {{post.date}}</h6>
         </div>
-        <div class='mx-3'>
+        <div class="mx-3 my-3">
             <p>{{post.description}}</p>
         </div>
 
@@ -15,23 +15,25 @@
 </div>
 
 {{#if logged_in}}
-<div>
-    <form class="addblog-form row g-2 justify-content-center">
-        <label for="comment">Comment</label>
-    </form>
-</div>
+    <div class="card col-md-10 offset-md-1  my-3">
+        <form class="addblog-form mx-3 my-3 row g-2 justify-content-center">
+            <label for="comment">Comment:</label>
+            <textarea name="comment" id="blog-comment" cols="30" rows="5"></textarea>
+            <button class="btn btn-primary col-3" type="submit">Submit</button>
+        </form>
+    </div>
 {{/if}}
 
 {{#each post.comments as |comments|}}
     <div class="card col-md-10 offset-md-1 my-3">
-        <div class="card-body py-0 px-0">
-            <div class="card-header d-flex justify-content-between">
+            <div class="mx-5 my-3 d-flex justify-content-between">
                 <div class="card-body py-0 px-0">
-                    <p class="card-text px-3">{{comments.description}}
-                        by
-                        {{user.user_name}}</p>
+                    <p class="card-text py-2 px-3">
+                        {{comments.description}}</p>
+                    <p>- {{user.user_name}}, {{comments.date}}</p>
                 </div>
             </div>
-        </div>
     </div>
 {{/each}}
+
+<script src="./js/blog.js"></script>
