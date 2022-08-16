@@ -1,5 +1,5 @@
-const router = require("express").Router()
-const { User, Blog } = require("../../models")
+const router = require("express").Router();
+const { User, Blog, Comment } = require("../../models");
 
 // CREATE new user
 router.post("/", async (req, res) => {
@@ -7,44 +7,70 @@ router.post("/", async (req, res) => {
         const dbUserData = await User.create({
             user_name: req.body.userName,
             password: req.body.password,
-        })
+        });
 
-        req.session.loggedIn = true
-        req.session.id = dbUserData.id
+        req.session.loggedIn = true;
+        req.session.id = dbUserData.id;
         // Set up sessions with a 'loggedIn' variable set to `true`
         req.session.save(() => {
-            res.status(200)
+            res.status(200);
             // .json(dbUserData)
-        })
+        });
     } catch (err) {
         console.log(err);
-        res.status(500).json(err)
+        res.status(500).json(err);
     }
 });
 
-router.post("/saveblog", async (req, res) => {
-    if ((req.session.loggedIn)) {
+router.post("/addComment", async (req, res) => {
+    if (req.session.loggedIn) {
         try {
             // create date
-            let currentDate = new Date()
-            let cDay = currentDate.getDate()
-            let cMonth = currentDate.getMonth() + 1
-            let cYear = currentDate.getFullYear()
+            let currentDate = new Date();
+            let cDay = currentDate.getDate();
+            let cMonth = currentDate.getMonth() + 1;
+            let cYear = currentDate.getFullYear();
+
+            const commentData = await Comment.create({
+                blog_id: req.body.blogId,
+                description: req.body.blogComment,
+                user_id: req.session.userId,
+                date: `${cMonth}/${cDay}/${cYear}`,
+            });
+            res.status(200).json(commentData);
+        } catch (err) {
+          console.log(err);
+          res.status(500).json(err);
+        } 
+    } else {
+      res.status(500).json({ message: "user not logged in" });
+  }
+});
+
+router.post("/saveblog", async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            // create date
+            let currentDate = new Date();
+            let cDay = currentDate.getDate();
+            let cMonth = currentDate.getMonth() + 1;
+            let cYear = currentDate.getFullYear();
 
             const blogData = await Blog.create({
                 title: req.body.title,
                 description: req.body.description,
                 user_id: req.session.userId,
                 date: `${cMonth}/${cDay}/${cYear}`,
-            })
+            });
+            res.status(200).json(blogData);
         } catch (err) {
-            console.log(err)
-            res.status(500).json(err)
+            console.log(err);
+            res.status(500).json(err);
         }
     } else {
-      res.status(500).json({message: 'user not logged in'})
+        res.status(500).json({ message: "user not logged in" });
     }
-})
+});
 
 // Login
 router.post("/login", async (req, res) => {
@@ -53,22 +79,22 @@ router.post("/login", async (req, res) => {
             where: {
                 user_name: req.body.username,
             },
-        })
+        });
 
         if (!dbUserData) {
             res.status(400).json({
                 message: "Incorrect username or password. Please try again!",
-            })
-            return
+            });
+            return;
         }
 
-        const validPassword = await dbUserData.checkPassword(req.body.password)
+        const validPassword = await dbUserData.checkPassword(req.body.password);
 
         if (!validPassword) {
             res.status(400).json({
                 message: "Incorrect username or password. Please try again!",
-            })
-            return
+            });
+            return;
         }
 
         // Once the user successfully logs in, set up the sessions variable 'loggedIn'
@@ -76,24 +102,24 @@ router.post("/login", async (req, res) => {
         req.session.userId = dbUserData.id;
 
         req.session.save(() => {
-            res.status(200).json({ message: "You are now logged in!" })
-        })
+            res.status(200).json({ message: "You are now logged in!" });
+        });
     } catch (err) {
-        console.log(err)
-        res.status(500).json(err)
+        console.log(err);
+        res.status(500).json(err);
     }
-})
+});
 
 // Logout
 router.post("/logout", (req, res) => {
     // When the user logs out, destroy the session
     if (req.session.loggedIn) {
         req.session.destroy(() => {
-            res.status(204).end()
-        })
+            res.status(204).end();
+        });
     } else {
-        res.status(404).end()
+        res.status(404).end();
     }
-})
+});
 
-module.exports = router
+module.exports = router;

@@ -1,4 +1,4 @@
-const addNewPostHandler = async (event) => {
+const addNewPostHandler = (event) => {
     location.replace('/newblog')
 }
 
