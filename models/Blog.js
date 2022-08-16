@@ -35,6 +35,7 @@ Blog.init(
       sequelize,
       freezeTableName: true,
       underscored: true,
+      onDelete: 'CASCADE',
       modelName: 'blog',
     }
   );

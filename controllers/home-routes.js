@@ -8,17 +8,17 @@ router.get("/", async (req, res) => {
         // Get all posts
         const postData = await Blog.findAll({
             include: [{ model: User }],
-        });
+        })
 
         // serialize post data
-        const posts = postData.map((project) => project.get({ plain: true }));
+        const posts = postData.map((project) => project.get({ plain: true }))
 
         // Use serilized data
         res.render("home", {
             posts,
             logged_in: req.session.loggedIn,
             userId: req.session.user_id,
-        });
+        })
     } catch (err) {
         res.status(500)
     }
@@ -27,14 +27,14 @@ router.get("/", async (req, res) => {
 router.get("/dashboard", async (req, res) => {
     if (req.session.loggedIn === true) {
         try {
-            const postData = await Blog.findAll( {
-                where:{user_id: req.session.userId,},
+            const postData = await Blog.findAll({
+                where: { user_id: req.session.userId },
                 include: [
                     { model: User, attributes: { exclude: ["password"] } },
                 ],
             });
             const posts = postData.map((cleaningPost) =>
-            cleaningPost.get({ plain: true })
+                cleaningPost.get({ plain: true })
             );
 
             console.log(posts);
@@ -44,10 +44,10 @@ router.get("/dashboard", async (req, res) => {
                 logged_in: req.session.loggedIn,
             });
         } catch (err) {
-            res.status(500)
+            res.status(500);
         }
     } else {
-        res.render("dashboard")
+        res.render("dashboard");
     }
 })
 
@@ -68,12 +68,12 @@ router.get("/blog/:id", async (req, res) => {
         })
 
         // serialize post data
-        const post = postData.get({ plain: true });
+        const post = postData.get({ plain: true })
         // Use serilized data
-        res.render("blog", { 
-            post, 
-            logged_in: req.session.loggedIn 
-        })
+        res.render("blog", {
+            post,
+            logged_in: req.session.loggedIn,
+        });
     } catch (err) {
         console.log(err)
         res.status(500)
@@ -92,18 +92,35 @@ router.get("/newblog", async (req, res) => {
     }
 } )
 
+
+router.get("/dashboard/:id", async (req, res) => {
+    try {
+
+        const blogData = await Blog.findByPk(req.params.id)
+
+        // serialize data
+        const blog = blogData.get({plain: true})
+        console.log(blog);
+        res.render("modify", {
+            blog,
+            logged_in: req.session.loggedIn,
+        });
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+    }
+})
+
 router.get("/login", (req, res) => {
-    res.render("login", 
-    {
-         logged_in: req.session.loggedIn
+    res.render("login", {
+        logged_in: req.session.loggedIn,
     })
 })
 
 router.get("/signup", async (req, res) => {
-    res.render("signup",
-    {
-        logged_in: req.session.loggedIn
+    res.render("signup", {
+        logged_in: req.session.loggedIn,
     })
 })
 
-module.exports = router;
+module.exports = router

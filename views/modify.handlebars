@@ -1,0 +1,14 @@
+<div class="container col-8">
+    <form class="addblog-form row g-2 justify-content-center">
+        <h1 class="text-center">Edit blog post</h1>
+        <label for="blog-title">Title</label>
+        <input id="blog-title" type="text" value="{{blog.title}}" name="blog-title"><br>
+
+        <label for="blog-text">Description</label>
+        <textarea name="blog-text" id="blog-text" cols="30" rows="5">{{blog.description}}</textarea>
+        <button id="update-blog" class="btn btn-primary col-2">Update Post</button>   
+        <button id="delete-blog" class="btn btn-primary col-2">Delete</button>  
+    </form>
+</div>
+
+<script src="../../js/modify.js"></script>

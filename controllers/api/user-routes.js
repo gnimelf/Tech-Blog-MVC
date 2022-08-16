@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { User, Blog, Comment } = require("../../models");
 
-// CREATE new user
+// create new user
 router.post("/", async (req, res) => {
     try {
         const dbUserData = await User.create({
@@ -22,6 +22,7 @@ router.post("/", async (req, res) => {
     }
 });
 
+// create a new comment
 router.post("/addComment", async (req, res) => {
     if (req.session.loggedIn) {
         try {
@@ -39,14 +40,63 @@ router.post("/addComment", async (req, res) => {
             });
             res.status(200).json(commentData);
         } catch (err) {
-          console.log(err);
-          res.status(500).json(err);
-        } 
+            console.log(err);
+            res.status(500).json(err);
+        }
     } else {
-      res.status(500).json({ message: "user not logged in" });
-  }
+        res.status(500).json({ message: "user not logged in" });
+    }
 });
 
+// Update blog
+router.put("/updateBlog", async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            // create date
+            let currentDate = new Date();
+            let cDay = currentDate.getDate();
+            let cMonth = currentDate.getMonth() + 1;
+            let cYear = currentDate.getFullYear();
+
+            const commentData = await Blog.update(
+                {
+                    title: req.body.blogTitle,
+                    description: req.body.blogDescription,
+                    date: `${cMonth}/${cDay}/${cYear}`,
+                },
+                {
+                    where: {
+                        id: parseInt(req.body.blogId),
+                    },
+                }
+            );
+            res.status(200).json(commentData);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(500).json({ message: "user not logged in" });
+    }
+});
+
+router.delete("/deleteBlog", async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            const commentData = await Blog.destroy({
+                where: {id: parseInt(req.body.blogId)},
+            });
+            res.status(200).json(commentData);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(500).json({ message: "not logged in" });
+    }
+});
+
+// create a blog
 router.post("/saveblog", async (req, res) => {
     if (req.session.loggedIn) {
         try {
