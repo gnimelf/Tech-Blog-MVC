@@ -1,15 +1,64 @@
-header{
+:root{
+    --bgColor: #E7F6F2;
+    --light: #A5C9CA;
+    --medium: #395B64;
+    --dark: #2C3333;
+    --mouseOver: #294249;
+}
+
+header {
     padding: 10px 20px;
-    background-color:#9EB23B;
+    background-color: var(--dark);
 }
 
 body {
+    position: relative;
     margin: 0;
-  }
+    min-height: 100%;
+    background-color: var(--bgColor);
+}
 
-#add-post{
-    background-color: #9EB23B;
+footer {
+    text-align: center;
+    color:var(--light);
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding: 15px 0px;
+    background-color: var(--medium);
+}
+
+.nav-link {
+    color: var(--bgColor);
+    font-size: large;
+}
+
+.nav-link:hover{
+    color: var(--light);
+}
+
+.logo {
+    font-family: 'Silkscreen', cursive;
+    color:var(--bgColor)
+}
+
+.card-title{
+    font-weight: bold;
+}
+
+.card-header, .card-subtitle, .card-header a{
+    color:var(--light);
+    background-color:var(--medium);
+    text-decoration: none;
+}
+
+.btn{
+    background-color: var(--medium);
     border: none;
+}
+
+.btn:hover{
+    background-color: var(--mouseOver);
 }
 
 #login{
