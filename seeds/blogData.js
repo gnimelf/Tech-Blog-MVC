@@ -8,29 +8,11 @@ const blogData = [
     user_id: 1
   },
   {
-    title: 'Test 1',
-    description: 'This is a test',
+    title: 'Authentication vs. Authorization',
+    description: 'There is a difference between authentication and authorization. Authentication means confirming your own identity, whereas authorization means being allows access to the system.',
     date: '8/9/2022',
     user_id: 1
-  },
-  {
-    title: 'Test 2',
-    description: 'This is a test',
-    date: '8/9/2022',
-    user_id: 1
-  },
-  {
-    title: 'Test 3',
-    description: 'This is a test',
-    date: '8/9/2022',
-    user_id: 1
-  },
-  {
-    title: 'Test 4',
-    description: 'This is a test',
-    date: '8/9/2022',
-    user_id: 1
-  },
+  }
 ];
 
 const seedBlog = () => Blog.bulkCreate(blogData);
