@@ -16,10 +16,9 @@ const PORT = process.env.port || 3003;
 const sess = {
     secret: "Super secret secret",
     cookie: {
-      // Stored in milliseconds (86400 === 1 day)
-      maxAge: Date.now() + (30 * 86400 * 1000),
+      maxAge: 60000
     },
-    sameSite: strict,
+    sameSite: true,
     resave: false,
     httpOnly: true,
     saveUninitialized: false,
