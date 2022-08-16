@@ -1,6 +1,6 @@
-const router = require("express").Router();
+const router = require("express").Router()
 
-const { User, Blog, Comment } = require("../models");
+const { User, Blog, Comment } = require("../models")
 
 // Show all posts
 router.get("/", async (req, res) => {
@@ -20,9 +20,9 @@ router.get("/", async (req, res) => {
             userId: req.session.user_id,
         });
     } catch (err) {
-        res.status(500);
+        res.status(500)
     }
-});
+})
 
 router.get("/dashboard", async (req, res) => {
     if (req.session.loggedIn === true) {
@@ -44,12 +44,12 @@ router.get("/dashboard", async (req, res) => {
                 logged_in: req.session.loggedIn,
             });
         } catch (err) {
-            res.status(500);
+            res.status(500)
         }
     } else {
-        res.render("dashboard");
+        res.render("dashboard")
     }
-});
+})
 
 // Get individual posts with comments
 router.get("/blog/:id", async (req, res) => {
@@ -65,25 +65,45 @@ router.get("/blog/:id", async (req, res) => {
                     ],
                 },
             ],
-        });
+        })
 
         // serialize post data
         const post = postData.get({ plain: true });
-
         // Use serilized data
-        res.render("blog", { post });
+        res.render("blog", { 
+            post, 
+            logged_in: req.session.loggedIn 
+        })
     } catch (err) {
-        console.log(err);
-        res.status(500);
+        console.log(err)
+        res.status(500)
     }
-});
+})
+
+router.get("/newblog", async (req, res) => {
+    try {
+        res.render('newblog', 
+        {
+            logged_in: req.session.loggedIn
+        })
+    } catch (err) {
+        console.log(err)
+        res.status(500)
+    }
+} )
 
 router.get("/login", (req, res) => {
-    res.render("login");
-});
+    res.render("login", 
+    {
+         logged_in: req.session.loggedIn
+    })
+})
 
 router.get("/signup", async (req, res) => {
-    res.render("signup");
-});
+    res.render("signup",
+    {
+        logged_in: req.session.loggedIn
+    })
+})
 
 module.exports = router;

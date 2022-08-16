@@ -16,11 +16,11 @@ const sess = {
     secret: "Super secret secret",
     cookie: {
       // Stored in milliseconds (86400 === 1 day)
-      maxAge: 86400,
+      maxAge: Date.now() + (30 * 86400 * 1000),
     },
-
+    sameSite: true,
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: new SequelizeStore({
         db: sequelize,
     }),

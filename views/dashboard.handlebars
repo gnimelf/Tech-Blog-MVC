@@ -1,7 +1,11 @@
-{{#each posts}}
+<div class="d-flex flex-column">
+    {{#each posts}}
     <div class="card col-md-10 offset-md-1 my-3">
         <div class="card-body py-0 px-0">
-            {{title}}
+            <a href="/dashboard/{{id}}">{{title}}</a>
         </div>
     </div>
-{{/each}}
+    {{/each}}
+    <button id="add-post" type="button" class="btn btn-primary align-self-center col-2">Add Post</button>
+</div>
+<script src="./js/dashboard.js"></script>
