@@ -67,7 +67,7 @@ Session timer
 
 ## Live DEMO
 
-https://tech-blog-jf.herokuapp.com/
+[LiveDemo](https://tech-blog-jf.herokuapp.com/)
 
 ## Credits
 
