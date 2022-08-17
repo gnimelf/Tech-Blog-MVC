@@ -1,6 +1,5 @@
 const router = require("express").Router()
 const { User, Blog, Comment } = require("../../models")
-const withAuth = require('../../utils/auth');
 
 // create new user
 router.post("/", async (req, res) => {
@@ -24,88 +23,103 @@ router.post("/", async (req, res) => {
 });
 
 // create a new comment
-router.post("/addComment", withAuth, async (req, res) => {
-    try {
-        // create date
-        let currentDate = new Date();
-        let cDay = currentDate.getDate();
-        let cMonth = currentDate.getMonth() + 1;
-        let cYear = currentDate.getFullYear();
+router.post("/addComment", async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            // create date
+            let currentDate = new Date();
+            let cDay = currentDate.getDate();
+            let cMonth = currentDate.getMonth() + 1;
+            let cYear = currentDate.getFullYear();
 
-        const commentData = await Comment.create({
-            blog_id: req.body.blogId,
-            description: req.body.blogComment,
-            user_id: req.session.userId,
-            date: `${cMonth}/${cDay}/${cYear}`,
-        });
-        res.status(200).json(commentData);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+            const commentData = await Comment.create({
+                blog_id: req.body.blogId,
+                description: req.body.blogComment,
+                user_id: req.session.userId,
+                date: `${cMonth}/${cDay}/${cYear}`,
+            });
+            res.status(200).json(commentData);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(500).json({ message: "user not logged in" });
     }
 });
 
 // Update blog
-router.put("/updateBlog", withAuth, async (req, res) => {
-    try {
-        // create date
-        let currentDate = new Date();
-        let cDay = currentDate.getDate();
-        let cMonth = currentDate.getMonth() + 1;
-        let cYear = currentDate.getFullYear();
+router.put("/updateBlog", async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            // create date
+            let currentDate = new Date();
+            let cDay = currentDate.getDate();
+            let cMonth = currentDate.getMonth() + 1;
+            let cYear = currentDate.getFullYear();
 
-        const commentData = await Blog.update(
-            {
-                title: req.body.blogTitle,
-                description: req.body.blogDescription,
-                date: `${cMonth}/${cDay}/${cYear}`,
-            },
-            {
-                where: {
-                    id: parseInt(req.body.blogId),
+            const commentData = await Blog.update(
+                {
+                    title: req.body.blogTitle,
+                    description: req.body.blogDescription,
+                    date: `${cMonth}/${cDay}/${cYear}`,
                 },
-            }
-        );
-        res.status(200).json(commentData);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+                {
+                    where: {
+                        id: parseInt(req.body.blogId),
+                    },
+                }
+            );
+            res.status(200).json(commentData);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(500).json({ message: "user not logged in" });
     }
 });
 
-router.delete("/deleteBlog", withAuth, async (req, res) => {
-    try {
-        const commentData = await Blog.destroy({
-            where: {id: parseInt(req.body.blogId)},
-        });
-        res.status(200).json(commentData);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+router.delete("/deleteBlog",  async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            const commentData = await Blog.destroy({
+                where: {id: parseInt(req.body.blogId)},
+            });
+            res.status(200).json(commentData);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(500).json({ message: "not logged in" });
     }
 });
 
 // create a blog
-router.post("/saveblog", withAuth, async (req, res) => {
-    try {
-        // create date
-        let currentDate = new Date();
-        let cDay = currentDate.getDate();
-        let cMonth = currentDate.getMonth() + 1;
-        let cYear = currentDate.getFullYear();
+router.post("/saveblog", async (req, res) => {
+    if (req.session.loggedIn) {
+        try {
+            // create date
+            let currentDate = new Date();
+            let cDay = currentDate.getDate();
+            let cMonth = currentDate.getMonth() + 1;
+            let cYear = currentDate.getFullYear();
 
-        const blogData = await Blog.create({
-            title: req.body.title,
-            description: req.body.description,
-            user_id: req.session.userId,
-            date: `${cMonth}/${cDay}/${cYear}`,
-        });
-        res.status(200).json(blogData);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+            const blogData = await Blog.create({
+                title: req.body.title,
+                description: req.body.description,
+                user_id: req.session.userId,
+                date: `${cMonth}/${cDay}/${cYear}`,
+            });
+            res.status(200).json(blogData);
+        } catch (err) {
+            console.log(err);
+            res.status(500).json(err);
+        }
+    } else {
+        res.status(500).json({ message: "user not logged in" });
     }
-
 });
 
 // Login

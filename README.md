@@ -65,7 +65,9 @@ Session timer
 
 ![screenshot](/assets/images/screenshot.png)
 
-## DEMO
+## Live DEMO
+
+https://tech-blog-jf.herokuapp.com/
 
 ## Credits
 

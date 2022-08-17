@@ -1,17 +1,16 @@
 const signupHandler = async (event) => {
     event.preventDefault();
 
-    const userName = document.querySelector("#username").value.trim();
-    const password = document.querySelector("#password").value.trim();
+    const userName = document.querySelector("#username").value;
+    const password = document.querySelector("#password").value;
 
     // Check username and password aren't empty
     if (userName && password) {
-        console.log(userName + " " + password)
-        const response = await fetch("/api/users/", 
+        const response = await fetch("/api/users/login", 
             {
                 method: 'POST',
                 body: JSON.stringify({userName, password}),
-                headers: { 'Content-Type': 'Application/json'}
+                headers: { 'Content-Type': 'application/json'}
             }
         );
 
