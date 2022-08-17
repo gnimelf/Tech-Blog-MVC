@@ -9,18 +9,18 @@ router.post("/", async (req, res) => {
             password: req.body.password,
         });
 
+        // Once the user successfully logs in, set up the sessions variable 'loggedIn'
         req.session.loggedIn = true;
-        req.session.id = dbUserData.id;
-        // Set up sessions with a 'loggedIn' variable set to `true`
+        req.session.userId = dbUserData.id;
+
         req.session.save(() => {
-            res.status(200);
-            // .json(dbUserData)
+            res.status(200).json({ message: "You are now logged in!" });
         });
     } catch (err) {
         console.log(err);
         res.status(500).json(err);
     }
-});
+})
 
 // create a new comment
 router.post("/addComment", async (req, res) => {
